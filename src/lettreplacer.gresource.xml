@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/dida_code/lettreplacer">
+    <file>window.ui</file>
+    <file>txt.png</file>
+  </gresource>
+</gresources>

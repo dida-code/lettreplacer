@@ -1,0 +1,7 @@
+data/io.github.dida_code.lettreplacer.desktop.in
+data/io.github.dida_code.lettreplacer.appdata.xml.in
+data/io.github.dida_code.lettreplacer.gschema.xml
+src/window.ui
+src/main.py
+src/window.py
+

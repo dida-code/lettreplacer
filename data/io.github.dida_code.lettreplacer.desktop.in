@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=lettreplacer
+Exec=lettreplacer
+Icon=io.github.dida_code.lettreplacer
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>io.github.dida_code.lettreplacer.desktop</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0-or-later</project_license>
+	<name>LettReplacer</name>
+	<description>
+	  <p>A small application for automatically changing certain letters in text.</p>
+	</description>
+  <summary>Tekst editor</summary>
+  <developer_name>Dimitrije Kocic</developer_name>
+	<content_rating type="oars-1.0">
+  </content_rating>
+
+  <launchable type="desktop-id">io.github.dida_code.lettreplacer.desktop</launchable>
+
+  <url type="homepage">https://github.com/dida-code/lettreplacer</url>
+
+  <releases>
+  	<release version="1.0.0" date="2023-08-26">
+    		<description>
+			<p>First release</p>
+		</description>
+  	</release>
+  </releases>
+
+  <categories>
+    <category>Utility</category>
+  </categories>
+
+	<screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/dida-code/lettreplacer/main/data/resources/Screenshot1.png</image>
+    </screenshot>
+	</screenshots>
+</component>
