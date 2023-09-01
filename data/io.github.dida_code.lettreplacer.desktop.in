@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=lettreplacer
+Name=LettReplacer
 Exec=lettreplacer
 Icon=io.github.dida_code.lettreplacer
 Terminal=false
