@@ -28,6 +28,8 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     tekst = Gtk.Template.Child()
     button = Gtk.Template.Child()
     button_about = Gtk.Template.Child()
+    cirilica = Gtk.Template.Child()
+    latinica = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -36,6 +38,8 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
 
         self.button.connect("clicked", self.printText)
         self.button_about.connect("clicked", self.prikazi_about)
+        self.latinica.connect("clicked", self.printLatinica)
+        self.cirilica.connect("clicked", self.printCirilica)
 
     def printText(self, widget):
 
@@ -49,6 +53,138 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
         "è": "č",
         "È": "Č",
         "ð": "đ"
+    }
+
+        buffer = self.tekst.get_buffer()
+        start_iter, end_iter = buffer.get_bounds()
+        text = buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
+
+        for original, replacement in replacements.items():
+            text = text.replace(original, replacement)
+
+        buffer.set_text(text)
+
+    def printCirilica(self, widget):
+        replacements = {
+        "Dj": "Ђ",
+        "dj": "ђ",
+        "Lj": "Љ",
+        "lj": "љ",
+        "Nj": "Њ",
+        "nj": "њ",
+        "Dž": "Џ",
+        "dž": "џ",
+
+        "B": "Б",
+        "b": "б",
+        "V": "В",
+        "v": "в",
+        "G": "Г",
+        "g": "г",
+        "D": "Д",
+        "d": "д",
+        "t": "т",
+        "Đ": "Ђ",
+        "đ": "ђ",
+        "Ž": "Ж",
+        "ž": "ж",
+        "Z": "З",
+        "z": "з",
+        "I": "И",
+        "i": "и",
+        "L": "Л",
+        "l": "л",
+
+        "N": "Н",
+        "n": "н",
+
+        "P": "П",
+        "p": "п",
+        "R": "Р",
+        "r": "р",
+        "S": "С",
+        "s": "с",
+        "Ć": "Ћ",
+        "ć": "ћ",
+        "U": "У",
+        "u": "у",
+        "F": "Ф",
+        "f": "ф",
+        "H": "Х",
+        "h": "х",
+        "C": "Ц",
+        "c": "ц",
+        "Č": "Ч",
+        "č": "ч",
+
+        "Š": "Ш",
+        "š": "ш"
+
+    }
+
+        buffer = self.tekst.get_buffer()
+        start_iter, end_iter = buffer.get_bounds()
+        text = buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
+
+        for original, replacement in replacements.items():
+            text = text.replace(original, replacement)
+
+        buffer.set_text(text)
+
+    def printLatinica(self, widget):
+        replacements = {
+        "Љ": "Lj",
+        "љ": "lj",
+        "Њ": "Nj",
+        "њ": "nj",
+        "Џ": "Dž",
+        "џ": "dž",
+
+        "Б": "B",
+        "б": "b",
+        "В": "V",
+        "в": "v",
+        "Г": "G",
+        "г": "g",
+        "Д": "D",
+        "д": "d",
+        "т": "t",
+        "Ђ": "Đ",
+        "ђ": "đ",
+        "Ж": "Ž",
+        "ж": "ž",
+        "З": "Z",
+        "з": "z",
+        "И": "I",
+        "и": "i",
+        "Л": "L",
+        "л": "l",
+
+        "Н": "N",
+        "н": "n",
+
+        "П": "P",
+        "п": "p",
+        "Р": "R",
+        "р": "r",
+        "С": "S",
+        "с": "s",
+        "Ћ": "Ć",
+        "ћ": "ć",
+        "У": "U",
+        "у": "u",
+        "Ф": "F",
+        "ф": "f",
+        "Х": "H",
+        "х": "h",
+        "Ц": "C",
+        "ц": "c",
+        "Ч": "Č",
+        "ч": "č",
+
+        "Ш": "Š",
+        "ш": "š"
+
     }
 
         buffer = self.tekst.get_buffer()
