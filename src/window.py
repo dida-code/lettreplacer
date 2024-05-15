@@ -199,7 +199,7 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     def prikazi_about(self, widget):
         about = Gtk.AboutDialog()
         about.set_program_name("LettReplacer")
-        about.set_version("0.1")
+        about.set_version("1.1")
         about.set_authors(['Dimitrije Kocic'])
         about.set_comments("A small application for automatically changing certain letters in text")
         about.set_website("https://github.com/dida-code/lettreplacer.git")
