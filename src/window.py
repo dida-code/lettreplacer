@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gdk, Gio, GLib, Pango
 from gi.repository import GdkPixbuf
 
 
@@ -30,17 +30,28 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     button_about = Gtk.Template.Child()
     cirilica = Gtk.Template.Child()
     latinica = Gtk.Template.Child()
+    quit = Gtk.Template.Child()
+    help = Gtk.Template.Child()
+    podesavanje = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-
+                
+        global velicina_font
+        velicina_font = "DejaVu Sans 20"
+        
+        self.tekst.override_font(Pango.FontDescription(velicina_font))
 
         self.button.connect("clicked", self.printText)
-        self.button_about.connect("clicked", self.prikazi_about)
+        self.button_about.connect("activate", self.prikazi_about)
         self.latinica.connect("clicked", self.printLatinica)
         self.cirilica.connect("clicked", self.printCirilica)
-
+        self.quit.connect("activate", self.turn_off)
+        self.help.connect("activate", self.prikazi_help)
+        self.podesavanje.connect("activate", self.prikazi_podesavanje)
+        
+                
     def printText(self, widget):
 
         replacements = {
@@ -199,7 +210,7 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     def prikazi_about(self, widget):
         about = Gtk.AboutDialog()
         about.set_program_name("LettReplacer")
-        about.set_version("1.1")
+        about.set_version("v1.2.0")
         about.set_authors(['Dimitrije Kocic'])
         about.set_comments("A small application for automatically changing certain letters in text")
         about.set_website("https://github.com/dida-code/lettreplacer.git")
@@ -208,7 +219,58 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
         about.set_logo(logo_pixbuf)
         about.run()
         about.destroy()
+    
+  
+    def prikazi_help(self, widget):
+        print("pomoc")
+        dialog = Gtk.MessageDialog(
 
+            transient_for=self,
+
+            flags=0,
+
+            message_type=Gtk.MessageType.INFO,
+
+            buttons=Gtk.ButtonsType.OK,
+
+            text="Pomoć za korišćenje aplikacije",
+
+        )
+
+        dialog.format_secondary_text("""
+
+            Dugme  Ispravi koristi se za ispravku slova:æ, Æ, , , , , è, È, ð
+            Dugme Na ćirilicu i dugme Na latinicu automatski menja
+            tekst sa ćirilice na latinicu i obrnuto."""
+
+        )
+
+        dialog.run()
+
+        print("INFO dialog closed")
+
+
+        dialog.destroy()
+        
+        
+    def turn_off(self,widget):
+        self.destroy()
+        
+    def prikazi_podesavanje(self, widget):
+        print("podesavanje")
+        
+        dialog = Gtk.FontChooserDialog(title="Izaberite Font", transient_for=self, flags=0)
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            velicina_font = dialog.get_font()
+            print("Izabrani font:", velicina_font)
+            self.tekst.override_font(Pango.FontDescription(velicina_font))
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Izbor otkazan")
+
+        dialog.destroy()
+                
 if __name__ == "__main__":
     win = LettreplacerWindow()
     win.connect("destroy", Gtk.main_quit)
