@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk, Gdk, Gio, GLib, Pango
 from gi.repository import GdkPixbuf
+import chardet
 
 
 @Gtk.Template(resource_path='/io/github/dida_code/lettreplacer/window.ui')
@@ -151,8 +152,16 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
             print("Open clicked")
             print("File selected: " + dialog.get_filename())
             self.file_path = dialog.get_filename()  # Sačuvaj putanju fajla
-            # Pročitaj sadržaj fajla i postavi ga u tekstualni widget
-            with open(self.file_path, 'r', encoding='utf-8') as file:
+
+        # Otvori fajl u binarnom modu i detektuj kodiranje
+            with open(self.file_path, 'rb') as file:
+                raw_data = file.read()
+                result = chardet.detect(raw_data)
+                encoding = result['encoding']
+                print(f"Detected encoding: {encoding}")
+
+        # Ponovno otvori fajl sa detektovanim kodiranjem
+            with open(self.file_path, 'r', encoding=encoding) as file:
                 file_content = file.read()
                 self.tekst.get_buffer().set_text(file_content)
         elif response == Gtk.ResponseType.CANCEL:
