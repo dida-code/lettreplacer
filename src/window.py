@@ -38,6 +38,8 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.file_path = None
                         
         global velicina_font
         velicina_font = "DejaVu Sans 14"
@@ -92,7 +94,7 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
     def prikazi_about(self, widget):
         about = Gtk.AboutDialog()
         about.set_program_name("LettReplacer")
-        about.set_version("v1.3.0")
+        about.set_version("v1.3.1")
         about.set_authors(['Dimitrije Kocic'])
         about.set_comments("A small application for automatically changing certain letters in text")
         about.set_website("https://github.com/dida-code/lettreplacer.git")
@@ -210,7 +212,48 @@ class LettreplacerWindow(Gtk.ApplicationWindow):
                 file.write(text)
             print(f"File saved: {self.file_path}")
         else:
-            print("No file selected to save.")
+            # If file_path is not set, prompt the user with a Save As dialog
+            dialog = Gtk.FileChooserDialog(
+                title="Save As",
+                parent=self,
+                action=Gtk.FileChooserAction.SAVE,
+            )
+            dialog.add_buttons(
+                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_SAVE, Gtk.ResponseType.OK
+            )
+
+            # Set a default filename
+            dialog.set_current_name("untitled.txt")
+
+            # Add filters
+            filter_text = Gtk.FileFilter()
+            filter_text.set_name("Text files")
+            filter_text.add_mime_type("text/plain")
+            dialog.add_filter(filter_text)
+
+            filter_all = Gtk.FileFilter()
+            filter_all.set_name("All files")
+            dialog.add_filter(filter_all)
+
+            response = dialog.run()
+            if response == Gtk.ResponseType.OK:
+                self.file_path = dialog.get_filename()
+                print(f"Saving file to: {self.file_path}")
+
+                # Get text from the TextView widget
+                buffer = self.tekst.get_buffer()
+                start_iter, end_iter = buffer.get_bounds()
+                text = buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
+
+                # Save the text to the file
+                with open(self.file_path, 'w', encoding='utf-8') as file:
+                    file.write(text)
+                print("File saved successfully.")
+            elif response == Gtk.ResponseType.CANCEL:
+                print("Save operation cancelled.")
+
+            dialog.destroy()
                             
 if __name__ == "__main__":
     win = LettreplacerWindow()
